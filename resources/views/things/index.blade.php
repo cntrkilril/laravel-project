@@ -9,11 +9,13 @@
                     <p class="fw-bold">{{$thing->name}}</p>
                     <p class="">{{$thing->description}}</p>
                 </div>
-                @if($thing->master_id==auth()->user()->id)
-                    <div class="bg-warning rounded p-2 align-items-center d-flex ms-3">
-                        <p class="p-0 m-0 align-self-center">моё</p>
-                    </div>
-                @endif
+                @auth("web")
+                    @if($thing->master_id==auth()->user()->id)
+                        <div class="bg-warning rounded p-2 align-items-center d-flex ms-3">
+                            <p class="p-0 m-0 align-self-center">моё</p>
+                        </div>
+                    @endif
+                @endauth
             </a>
         @endforeach
         <p class="align-self-start">На странице: {{count($things)}}</p>

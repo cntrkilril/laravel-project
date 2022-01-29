@@ -17,7 +17,7 @@ class CreatePlacesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->string('repair');
+            $table->boolean('repair');
             $table->boolean('work');
             $table->timestamps();
         });

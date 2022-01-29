@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', function () {return view("about.about");})->name('about');
 Route::get('/things', [\App\Http\Controllers\ThingsController::class, 'index'])->name('home');
+Route::get('/places', [\App\Http\Controllers\PlaceController::class, 'index'])->name('places');
+Route::get("/users", [\App\Http\Controllers\UserController::class, 'index'])->name('profiles');
 
 Route::middleware("auth")-> group(function (){
     Route::group(["prefix"=>'/things'], function () {
@@ -24,8 +26,15 @@ Route::middleware("auth")-> group(function (){
         Route::post('/{id}/edit', [\App\Http\Controllers\ThingsController::class, 'store'])->name('things_edit');
     });
     Route::group(["prefix"=>'/users'], function () {
-        Route::get("/", [\App\Http\Controllers\UserController::class, 'index'])->name('profiles');
         Route::get("/{id}", [\App\Http\Controllers\UserController::class, 'show'])->name('profile');
+    });
+    Route::group(["prefix"=>'/places'], function () {
+        Route::get('/create', [\App\Http\Controllers\PlaceController::class, 'create'])->name('places_create');
+        Route::post('/store', [\App\Http\Controllers\PlaceController::class, 'store'])->name('places_store');
+        Route::get('/{id}', [\App\Http\Controllers\PlaceController::class, 'show'])->name('places_show');
+        Route::post('/{id}/delete', [\App\Http\Controllers\PlaceController::class, 'destroy'])->name('places_delete');
+        Route::get('/{id}/edit', [\App\Http\Controllers\PlaceController::class, 'edit'])->name('places_edit');
+        Route::post('/{id}/edit', [\App\Http\Controllers\PlaceController::class, 'store'])->name('places_edit');
     });
     Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 });
