@@ -18,11 +18,12 @@
                     <div class="navbar-nav d-flex justify-content-start w-100">
                         <a class="nav-link" href="{{route("home")}}">Вещи</a>
                         <a class="nav-link" href="{{route("logout")}}">Места</a>
+                        <a class="nav-link" href="{{route("profiles")}}">Пользователи</a>
                     </div>
                 @endauth
                 <div class="navbar-nav d-flex justify-content-end">
                     @auth("web")
-                        <a class="nav-link" href="{{route("logout")}}">Профиль</a>
+                        <a class="nav-link" href="/users/{{auth()->user()->id}}">Профиль</a>
                         <a class="nav-link" href="{{route("logout")}}">Выйти</a>
                     @endauth
                     @guest("web")

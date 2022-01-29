@@ -23,6 +23,10 @@ Route::middleware("auth")-> group(function (){
         Route::get('/{id}/edit', [\App\Http\Controllers\ThingsController::class, 'edit'])->name('things_edit');
         Route::post('/{id}/edit', [\App\Http\Controllers\ThingsController::class, 'store'])->name('things_edit');
     });
+    Route::group(["prefix"=>'/users'], function () {
+        Route::get("/", [\App\Http\Controllers\UserController::class, 'index'])->name('profiles');
+        Route::get("/{id}", [\App\Http\Controllers\UserController::class, 'show'])->name('profile');
+    });
     Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 });
 
