@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Place;
 use App\Models\Thing;
 use App\Models\UseModel;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -36,8 +37,9 @@ class UseController extends Controller
                 $free_count = $free_count + $uses[$i]->amount;
             }
         }
+        $users = User::all();
         $free_count = $use->amount - $free_count;
-        return view("uses.create", ['use' => $use, 'places' => $places, 'free_count' => $free_count]);
+        return view("uses.create", ['use' => $use, 'places' => $places, 'free_count' => $free_count, 'users'=> $users]);
     }
 
     /**
@@ -51,7 +53,8 @@ class UseController extends Controller
         $data = $request->validate([
             'thing_id'=> ['required'],
             'amount'=>['required'],
-            'place_id'=>['required']
+            'place_id'=>['required'],
+            'user_id'=>['required']
         ]);
 
         $use = new UseModel();
@@ -59,7 +62,7 @@ class UseController extends Controller
         $use -> thing_id = $data['thing_id'];
         $use -> place_id = $data['place_id'];
         $use -> amount = $data['amount'];
-        $use -> user_id = auth()->user()->id;
+        $use -> user_id = $data['user_id'];
         $use->save();
 
         return redirect('/things/'.$use->thing_id);

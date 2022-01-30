@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegisterMail;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -50,6 +52,8 @@ class AuthController extends Controller
         if($user) {
             auth("web")->login($user);
         }
+
+        Mail::to(auth()->user())->send(new RegisterMail());
 
         return redirect(route("home"));
     }
