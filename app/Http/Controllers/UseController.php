@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\GetThingsMail;
 use App\Models\Place;
 use App\Models\Thing;
 use App\Models\UseModel;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class UseController extends Controller
 {
@@ -64,6 +67,11 @@ class UseController extends Controller
         $use -> amount = $data['amount'];
         $use -> user_id = $data['user_id'];
         $use->save();
+
+        $thing = Thing::findorFail($use->thing_id);
+
+
+        Mail::to(User::findorFail($use->user_id)->email)->send(new GetThingsMail($thing));
 
         return redirect('/things/'.$use->thing_id);
     }

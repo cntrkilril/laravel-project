@@ -2,12 +2,14 @@
 
 namespace App\Mail;
 
+use App\Models\Thing;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use phpDocumentor\Reflection\Types\Object_;
 
-class RegisterMail extends Mailable
+class GetThingsMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,9 +18,11 @@ class RegisterMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $thing;
+
+    public function __construct(Thing $thing)
     {
-        //
+        $this->thing = $thing;
     }
 
     /**
@@ -29,8 +33,8 @@ class RegisterMail extends Mailable
     public function build()
     {
         return $this
-            ->subject('Уведомление о регистрации')
+            ->subject('Уведомление о назначении')
             ->from('shalkir934@gmail.com', 'Kirill')
-            ->view('mail.register');
+            ->view('mail.getThings');
     }
 }

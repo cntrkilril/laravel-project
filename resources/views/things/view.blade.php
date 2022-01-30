@@ -3,7 +3,8 @@
     <a class="nav-link mt-2" href="{{route("home")}}">Вернуться к новостям</a>
     <h3 class="mt-2 mb-2">{{$thing->name}}</h3>
             <div class="d-flex justify-content-between">
-                @if($thing->master_id==auth()->user()->id)
+{{--                @can('delete-update', $thing)--}}
+                @canany(['delete', 'update'], $thing)
                     <div class="align-items-center d-flex p-0">
                         <a href="/things/{{$thing->id}}/edit" class="btn btn-success">Редактировать</a>
                         <form class="" action="/things/{{$thing->id}}/delete" method="post">
@@ -11,11 +12,8 @@
                             <button class="btn btn-danger ms-3" type="submit">Удалить</button>
                         </form>
                     </div>
-                @else
-                    <div class="">
-
-                    </div>
-                @endif
+                @endcanany
+{{--                @endcan()--}}
                     <div class="align-items-center d-flex p-0 justify-items-center">
                         @if($free_count != 0)
                             <a href="/uses/{{$thing->id}}/create" class="btn btn-success">Начать использовать</a>

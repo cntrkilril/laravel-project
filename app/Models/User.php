@@ -51,4 +51,8 @@ class User extends Authenticatable
     public function uses() {
         return $this->hasMany('UseModel', 'user_id', 'id');
     }
+
+    public function roles() {
+        return $this->belongsTo('Role', 'id', 'role_id');
+    }
 }

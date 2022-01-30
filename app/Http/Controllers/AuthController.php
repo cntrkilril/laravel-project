@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmailJob;
 use App\Mail\RegisterMail;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -46,14 +47,17 @@ class AuthController extends Controller
         $user = User::create([
             "name" => $data['name'],
             "email" => $data['email'],
-            "password" => bcrypt($data['password'])
+            "password" => bcrypt($data['password']),
+            "role_id" => '2'
         ]);
 
         if($user) {
             auth("web")->login($user);
         }
 
-        Mail::to(auth()->user())->send(new RegisterMail());
+        $details['email'] = $data['email'];
+
+        $this->dispatch(new SendEmailJob($details));
 
         return redirect(route("home"));
     }

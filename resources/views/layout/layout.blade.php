@@ -13,6 +13,14 @@
     <?php
         $path = explode('/', request()->path());
     ?>
+    @can('admin-panel')
+        <div class="navbar navbar-expand-lg navbar-light bg-dark text-white">
+            <div class="d-flex flex-column container-fluid">
+                <h1 class="text-center w-100">Административная панель</h1>
+                <p class="">У обычных пользователей ее нет</p>
+            </div>
+        </div>
+    @endcan
     <header class="">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
