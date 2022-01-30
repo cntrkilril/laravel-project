@@ -10,28 +10,36 @@
         <link rel="icon" href="{{ asset('icon.ico') }}">
     </head>
     <body class="antialiased">
+    <?php
+        $path = explode('/', request()->path());
+    ?>
     <header class="">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{route("about")}}">EXAM</a>
+                <a class="navbar-brand">EXAM</a>
                 <div class="navbar-nav d-flex justify-content-start w-100">
-                    <a class="nav-link" href="{{route("home")}}">Вещи</a>
-                    <a class="nav-link" href="{{route("places")}}">Места</a>
-                    <a class="nav-link" href="{{route("profiles")}}">Пользователи</a>
+                    <a class="nav-link @if($path[0] == "")active @endif" href="{{route("about")}}">О проекте</a>
+                    <a class="nav-link @if($path[0] == "things")active @endif" href="{{route("home")}}">Вещи</a>
+                    <a class="nav-link @if($path[0] == "places")active @endif" href="{{route("places")}}">Места</a>
+                    <a class="nav-link @if($path[0] == "users" && count($path) == 1) active
+                        @elseif($path[0] == "users" && $path[1] != auth()->user()->id) active
+                        @endif" href="{{route("profiles")}}">Пользователи</a>
                 </div>
                 <div class="navbar-nav d-flex justify-content-end">
                     @auth("web")
-                        <a class="nav-link" href="/users/{{auth()->user()->id}}">Профиль</a>
+                        <a class="nav-link @if(count($path) != 1)
+                            @if($path[0] == "users" && $path[1] == auth()->user()->id) active @endif
+                        @endif" href="/users/{{auth()->user()->id}}">Профиль</a>
                         <a class="nav-link" href="{{route("logout")}}">Выйти</a>
                     @endauth
                     @guest("web")
-                        <a class="nav-link" href="{{route("login")}}">Войти</a>
+                        <a class="nav-link @if($path[0] == "login" || $path[0] == "register")active @endif" href="{{route("login")}}">Войти</a>
                     @endguest
                 </div>
             </div>
         </nav>
     </header>
-        <div class="container mb-5 mx-5">
+        <div class="mb-5 mx-5">
             @yield('content')
         </div>
     </body>

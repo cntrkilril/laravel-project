@@ -2,25 +2,31 @@
 
 namespace Database\Factories;
 
-use App\Models\Thing;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ThingFactory extends Factory
+class PlaceFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array
      */
-    protected $model = Thing::class;
     public function definition()
     {
+        $repair = random_int(0, 1);
+        if ($repair == 0 ) {
+            $work = "1";
+            $repair = "0";
+        }
+        else {
+            $work = "0";
+            $repair = "1";
+        }
         return [
             'name' => $this -> faker -> word(),
             'description' => $this -> faker -> sentence(),
-            'master_id' => "1",
-            'amount' => $this -> faker -> randomDigit(),
-            'wrnt' => '20/10/2022'
+            'repair' => $repair,
+            'work' => $work
         ];
     }
 }

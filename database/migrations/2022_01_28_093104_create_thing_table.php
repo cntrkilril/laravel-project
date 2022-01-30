@@ -19,6 +19,7 @@ class CreateThingTable extends Migration
             $table->string('description');
             $table->date('wrnt');
             $table->foreignId('master_id')->references('id')->on('users');
+            $table->integer("amount");
             $table->timestamps();
         });
     }
