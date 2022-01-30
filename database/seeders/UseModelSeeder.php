@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Place;
-use App\Models\Thing;
+use App\Models\UseModel;
 use Illuminate\Database\Seeder;
 
-class PlaceSeeder extends Seeder
+class UseModelSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +14,6 @@ class PlaceSeeder extends Seeder
      */
     public function run()
     {
-        Place::factory()->count(5)->create();
+        UseModel::factory()->count(3)->create();
     }
 }

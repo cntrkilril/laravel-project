@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Thing;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -50,7 +51,14 @@ class UserController extends Controller
     {
         $user = User::findorFail($id);
         $things = Thing::where('master_id', $id)->get();
-        return view('profile.view', ['user'=>$user, 'things'=>$things]);
+        $things_used = DB::table('things')
+            ->join('use_models', 'things.id', '=', 'use_models.thing_id')
+            ->where('use_models.user_id', $id)
+            ->select('things.*')
+            ->get();
+        $free_things = count($things_used);
+
+        return view('profile.view', ['user'=>$user, 'things'=>$things, 'free_things'=>$free_things]);
     }
 
     /**

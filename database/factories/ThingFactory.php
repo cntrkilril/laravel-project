@@ -18,8 +18,8 @@ class ThingFactory extends Factory
         return [
             'name' => $this -> faker -> word(),
             'description' => $this -> faker -> sentence(),
-            'master_id' => "1",
-            'amount' => $this -> faker -> randomDigit(),
+            'master_id' => $this -> faker -> numberBetween(1, 3),
+            'amount' => '10',
             'wrnt' => '20/10/2022'
         ];
     }

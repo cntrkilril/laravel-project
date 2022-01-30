@@ -13,6 +13,10 @@
             @error('description')
             <p class="text-danger">{{$message}}</p>
             @enderror
+            <input class="form-control mt-3" type="number" name="amount" id="amount" placeholder="Введите доступное кол-во" value="{{$thing->amount}}">
+            @error('amount')
+            <p class="text-danger">{{$message}}</p>
+            @enderror
             <input class="form-control mt-3" type="date" name="wrnt" id="wrnt">
             <p class="">Установлено: {{$thing->wrnt}}</p>
             @error('wrnt')

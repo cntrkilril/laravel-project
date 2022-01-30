@@ -13,7 +13,7 @@ class CreateUseTable extends Migration
      */
     public function up()
     {
-        Schema::create('use', function (Blueprint $table) {
+        Schema::create('use_models', function (Blueprint $table) {
             $table->foreignId('thing_id')->references('id')->on('things');
             $table->foreignId('place_id')->references('id')->on('places');
             $table->foreignId('user_id')->references('id')->on('users');
@@ -29,6 +29,6 @@ class CreateUseTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('use');
+        Schema::dropIfExists('uses');
     }
 }

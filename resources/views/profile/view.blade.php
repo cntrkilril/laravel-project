@@ -8,11 +8,8 @@
     <h4 class="mt-2 mb-2">{{$user->name}}</h4>
     <p class="">{{$user->email}}</p>
     <h4 class="mt-2 mb-2">Личные вещи</h4>
+    <p class=""><b>Использующиеся сейчас:</b> {{$free_things}}</p>
     <p class=""><b>Всего: </b>{{count($things)}}</p>
-    <p class=""><b>Свободно: </b></p>
-    <h4 class="mt-2 mb-2">Взятые вещи</h4>
-    <p class=""><b>Всего(за все время): </b></p>
-    <p class=""><b>Сейчас: </b></p>
     @if($user->id == auth()->user()->id)
         <h4 class="mt-2">Мои вещи</h4>
     @else
@@ -25,6 +22,11 @@
                     <p class="fw-bold">{{$thing->name}}</p>
                     <p class="">{{$thing->description}}</p>
                 </div>
+                @if(auth()->user()->id == $thing->master_id)
+                    <div class="bg-warning rounded p-2 align-items-center d-flex ms-3">
+                        <p class="p-0 m-0 align-self-center">моё</p>
+                    </div>
+                @endif
             </a>
         @endforeach
     </div>

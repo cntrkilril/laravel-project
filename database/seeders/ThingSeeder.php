@@ -14,6 +14,6 @@ class ThingSeeder extends Seeder
      */
     public function run()
     {
-        Thing::factory()->count(10)->create();
+        Thing::factory()->count(5)->create();
     }
 }
