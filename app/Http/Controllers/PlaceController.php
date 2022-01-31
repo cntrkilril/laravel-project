@@ -6,6 +6,7 @@ use App\Models\Place;
 use App\Models\Thing;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PlaceController extends Controller
 {
@@ -27,6 +28,10 @@ class PlaceController extends Controller
      */
     public function create()
     {
+        $place = new Place();
+        if (auth()->user()->cannot('update', $place)) {
+            abort(403);
+        }
         return view("places.create");
     }
 
@@ -50,6 +55,10 @@ class PlaceController extends Controller
         }
         else {
             $place = Place::findorFail($data['id']);
+        }
+
+        if (auth()->user()->cannot('update', $place)) {
+            abort(403);
         }
 
         $place -> name = $data['name'];
@@ -88,6 +97,9 @@ class PlaceController extends Controller
     public function edit($id)
     {
         $place = Place::findorFail($id);
+        if (auth()->user()->cannot('update', $place)) {
+            abort(403);
+        }
         return view('places.edit', ['place' => $place]);
     }
 
@@ -112,6 +124,12 @@ class PlaceController extends Controller
     public function destroy($id)
     {
         $place = Place::findorFail($id);
+        if (auth()->user()->cannot('update', $place)) {
+            abort(403);
+        }
+        DB::table('use_models')
+            ->where('place_id', $id)
+            ->delete();
         Place::where('id', $id)->delete();
         $place->delete();
         return redirect('/places');

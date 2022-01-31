@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Place;
 use App\Models\Thing;
 use App\Models\UseModel;
 use App\Models\User;
+use App\Policies\PlacePolicy;
 use App\Policies\ThingPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +21,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-        Thing::class => ThingPolicy::class
+        Thing::class => ThingPolicy::class,
+        Place::class => PlacePolicy::class
     ];
 
     /**

@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Thing;
+use App\Models\Place;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ThingPolicy
+class PlacePolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class ThingPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\=Thing  $=Thing
+     * @param  \App\Models\Place  $place
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Thing $thing)
+    public function view(User $user, Place $place)
     {
         //
     }
@@ -41,17 +41,19 @@ class ThingPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->role_id == '1') {
+            return true;
+        }
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\=Thing  $=Thing
+     * @param  \App\Models\Place  $place
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Thing $thing)
+    public function update(User $user, Place $place)
     {
         if ($user->role_id == '1') {
             return true;
@@ -62,10 +64,10 @@ class ThingPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\=Thing  $=Thing
+     * @param  \App\Models\Place  $place
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Thing $thing)
+    public function delete(User $user, Place $place)
     {
         if ($user->role_id == '1') {
             return true;
@@ -76,10 +78,10 @@ class ThingPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\=Thing  $=Thing
+     * @param  \App\Models\Place  $place
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Thing $thing)
+    public function restore(User $user, Place $place)
     {
         //
     }
@@ -88,10 +90,10 @@ class ThingPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\=Thing  $=Thing
+     * @param  \App\Models\Place  $place
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Thing $thing)
+    public function forceDelete(User $user, Place $place)
     {
         //
     }
